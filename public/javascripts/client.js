@@ -122,7 +122,7 @@ function sendRTCEvent(msg) {
     socket.emit(CLIENT_RTC_EVENT, JSON.stringify(msg));
 }
 
-let pc = null;
+let pc;
 
 /**
  * 邀请用户加入视频聊天
@@ -131,20 +131,36 @@ let pc = null;
  */
 async function startVideoTalk() {
     // 开启本地视频
-    const localVideo = document.getElementById('local-video');
-    const mediaStream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true
-    });
-    localVideo.srcObject = mediaStream;
-    // 创建 peerConnection
-    createPeerConnection();
-    // 将媒体流添加到webrtc的音视频收发器
-    mediaStream.getTracks().forEach(track => {
-        pc.addTrack(track, mediaStream);
-        // pc.addTransceiver(track, {streams: [mediaStream]});
-    });
-    // pc.addStream(mediaStream); // 目前这个也可以，不过接口后续会废弃
+    try {
+        const mediaStream = await navigator.mediaDevices.getUserMedia({audio: true, video: true});
+        console.log('Received local stream');
+        localVideo.srcObject = mediaStream;
+        // 创建 peerConnection
+        createPeerConnection();
+        // 将媒体流添加到webrtc的音视频收发器
+        mediaStream.getTracks().forEach(track => {
+            pc.addTrack(track, mediaStream);
+        });
+    } catch (e) {
+        alert(`getUserMedia() error: ${e.name}, message:${e.message}`);
+        console.log(e);
+    }
+    //
+    // // 开启本地视频
+    // const localVideo = document.getElementById('local-video');
+    // const mediaStream = await navigator.mediaDevices.getUserMedia({
+    //     video: true,
+    //     audio: true
+    // });
+    // localVideo.srcObject = mediaStream;
+    // // 创建 peerConnection
+    // createPeerConnection();
+    // // 将媒体流添加到webrtc的音视频收发器
+    // mediaStream.getTracks().forEach(track => {
+    //     pc.addTrack(track, mediaStream);
+    //     // pc.addTransceiver(track, {streams: [mediaStream]});
+    // });
+    // // pc.addStream(mediaStream); // 目前这个也可以，不过接口后续会废弃
 }
 
 function createPeerConnection() {

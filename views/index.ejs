@@ -2,6 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="description" content="WebRTC code samples">
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+    <meta itemprop="description" content="Client-side WebRTC code samples">
+    <meta itemprop="name" content="WebRTC code samples">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta id="theme-color" name="theme-color" content="#ffffff">
     <title>视频聊天</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
@@ -20,11 +26,11 @@
     <div class="video-container">
         <div class="local-video-wrapper">
             <label class="title">本地视频</label>
-            <video id="local-video" class="local-video" autoplay></video>
+            <video id="local-video" class="local-video" playsinline autoplay muted></video>
         </div>
         <div class="remote-video-wrapper">
             <label class="title">远程视频</label>
-            <video id="remote-video" autoplay></video>
+            <video id="remote-video" playsinline autoplay muted></video>
         </div>
     </div>
 </div>
